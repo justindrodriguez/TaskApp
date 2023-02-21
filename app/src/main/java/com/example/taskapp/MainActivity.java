@@ -2,8 +2,10 @@ package com.example.taskapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.taskapp.models.Task;
 
@@ -41,8 +43,21 @@ public class MainActivity extends AppCompatActivity {
         for(Task t : tasks){
             Log.d(TAG, t.toString());
         }
+    }
 
+    public void btnPressed(View v){
+        //Toast.makeText(this, R.string.btn_cheers, Toast.LENGTH_LONG).show();
+        int idNum = v.getId();
+        String idName = getResources().getResourceEntryName(idNum);
+        //Toast.makeText(this, idName, Toast.LENGTH_LONG).show();
 
+        Intent i;
 
+        switch(idName){
+            case "btnIoActivity":
+                i = new Intent(this, FileIOActivity.class);
+                startActivity(i);
+                break;
+        }
     }
 }
