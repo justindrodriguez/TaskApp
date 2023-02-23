@@ -28,14 +28,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Task newTask = new Task("Haircut", new Date(), false);
-        newTask = tda.insertTask(newTask);
+        try {
+            newTask = tda.insertTask(newTask);
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Log.d(TAG, e.getMessage());
+        }
         Log.d(TAG, "NEW TASK ID: " + newTask.getId());
 
         Task someTask = tda.getTaskById(1);
         Log.d(TAG, someTask.toString());
 
         someTask.setDescription("Exercise");
-        tda.updateTask(someTask);
+        try {
+            tda.updateTask(someTask);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Log.d(TAG, someTask.toString());
 
        int numRows = tda.deleteTask(newTask);
@@ -58,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
                 i = new Intent(this, FileIOActivity.class);
                 startActivity(i);
                 break;
+            case "btnTaskActivity":
+                i = new Intent(this, TaskListActivity.class);
+                startActivity(i);
+                break;
         }
+
     }
 }

@@ -1,11 +1,17 @@
 package com.example.taskapp;
 
+import static java.lang.Long.parseLong;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
 
 import com.example.taskapp.fileio.FileHelper;
+import com.example.taskapp.fileio.models.Task;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FileIOActivity extends AppCompatActivity {
 
@@ -30,5 +36,25 @@ public class FileIOActivity extends AppCompatActivity {
         }else{
             Log.d(TAG, "FAILED to readFromFile()");
         }
+
+        Task t = new Task(1, "Laundry", new Date(), false);
+        String csv = convertTaskToCSV(t);
+        Log.d(TAG, csv);
     }
+
+    private String convertTaskToCSV(Task task){
+        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
+        return task.getId() + "," + task.getDescription().toString() + "," + task.getDue().toString() + "," + task.isDone();
+    }
+
+    private Task convertCSVToTask(String i){
+
+        String[] sections = i.split(",");
+        long id = parseLong(sections[0]);
+        String description = sections[1];
+       // Date due =
+       Task task = new Task(id,"temp", new Date(), true);
+
+        return task;
+    };
 }

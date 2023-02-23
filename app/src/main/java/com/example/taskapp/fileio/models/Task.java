@@ -1,4 +1,4 @@
-package com.example.taskapp.models;
+package com.example.taskapp.fileio.models;
 
 import java.util.Date;
 
@@ -65,14 +65,6 @@ public class Task {
         return String.format("ID: %d DESC: %s DUE: %s COMPLETED: %b", this.id, this.description, dueStr, this.done);
     }
 
-    public boolean isValid(){
-        if(this.description.isEmpty()){
-            return false;
-        }
 
-
-
-        return true;
-    };
 
 }

@@ -17,6 +17,8 @@ import com.example.taskapp.models.Task;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TaskDetailsActivity extends AppCompatActivity {
 
@@ -31,6 +33,8 @@ public class TaskDetailsActivity extends AppCompatActivity {
     CheckBox chkDone;
     Button btnSave;
 
+
+    SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +72,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
             txtDescription.setText(task.getDescription());
             chkDone.setChecked(task.isDone());
             String dateStr = null;
-            SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
+
             dateStr = sdf.format(task.getDue());
             txtDueDate.setText(dateStr);
         }
@@ -83,17 +87,26 @@ public class TaskDetailsActivity extends AppCompatActivity {
         }
 
         Date dueDate = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
+
         if(txtDueDate.getText().toString().isEmpty()){
             isValid = false;
             txtDueDate.setError(("Date is required."));
         }else{
-            try {
-                dueDate = sdf.parse(txtDueDate.getText().toString());
-            } catch (ParseException e) {
-                e.printStackTrace();
+//            try {
+//                dueDate = sdf.parse(txtDueDate.getText().toString());
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//                isValid = false;
+//                txtDueDate.setError("Enter valid date.");
+//
+//            }
+            String regex = "^(1[0-2]|0[1-9])/(3[01]"
+                    + "|[12][0-9]|0[1-9])/[0-9]{4}$";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(txtDueDate.getText().toString());
+            if(!matcher.matches()){
                 isValid = false;
-                txtDueDate.setError("Enter valid date.");
+                txtDueDate.setError("The date entered is not valid");
             }
         }
 
@@ -104,11 +117,21 @@ public class TaskDetailsActivity extends AppCompatActivity {
         if(validate()){
             getDataFromUI();
             if(task.getId() > 0){
-                Log.d(TAG, "UDPDATE TASK");
-                da.updateTask(task);
+                Log.d(TAG, "UPDATE TASK");
+                try {
+                    da.updateTask(task);
+                } catch (Exception e) {
+                    //e.printStackTrace();
+                    Log.d(TAG, e.getMessage());
+                }
             }else{
                 Log.d(TAG, "INSERT TASK");
-                da.insertTask(task);
+                try {
+                    da.insertTask(task);
+                } catch (Exception e) {
+                    //e.printStackTrace();
+                    Log.d(TAG, e.getMessage());
+                }
             }
             return true;
         }
@@ -121,7 +144,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
         boolean done = chkDone.isChecked();
 
         Date date = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
+
         try {
             date = sdf.parse(dueDateStr);
         } catch (ParseException e) {
