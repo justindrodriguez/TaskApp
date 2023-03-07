@@ -71,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
                 i = new Intent(this, TaskListActivity.class);
                 startActivity(i);
                 break;
+            case "btnAdapterActivity":
+                i = new Intent(this, AdapterActivity.class);
+                startActivity(i);
+                break;
         }
 
     }

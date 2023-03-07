@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.Toast;
 
+import com.example.taskapp.fileio.csvTaskDataAccess;
 import com.example.taskapp.models.Task;
 
 import java.text.ParseException;
@@ -25,7 +26,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
     public static final String TAG = "TaskDetailsActivity";
     public static final String EXTRA_TASK_ID = "taskId";
 
-    TaskDataAccess da;
+    Taskable da;
     Task task;
 
     EditText txtDescription;
@@ -57,7 +58,8 @@ public class TaskDetailsActivity extends AppCompatActivity {
             }
         });
 
-        da = new TaskDataAccess(this);
+        //da = new TaskDataAccess(this);
+        da = new csvTaskDataAccess(this);
         Intent i = getIntent();
         long id = i.getLongExtra(EXTRA_TASK_ID, 0);
         if(id > 0){

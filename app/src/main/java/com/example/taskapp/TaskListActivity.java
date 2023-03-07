@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.taskapp.fileio.csvTaskDataAccess;
 import com.example.taskapp.models.Task;
 
 import java.sql.Array;
@@ -20,7 +21,7 @@ public class TaskListActivity extends AppCompatActivity {
 
     public static final String TAG = "TaskListActivity";
     private ListView lsTasks;
-    private TaskDataAccess da;
+    private Taskable da;
     private ArrayList<Task> allTasks;
     private Button btnAddTask;
 
@@ -28,6 +29,10 @@ public class TaskListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
+
+        //
+        // TEST CODE
+        //csvTaskDataAccess csvTest = new csvTaskDataAccess(this);
 
         btnAddTask = findViewById(R.id.btnAddTask);
         btnAddTask.setOnClickListener(new View.OnClickListener() {
@@ -39,7 +44,8 @@ public class TaskListActivity extends AppCompatActivity {
         });
 
         lsTasks = findViewById(R.id.lsTasks);
-        da = new TaskDataAccess(this);
+        //da = new TaskDataAccess(this);
+        da = new csvTaskDataAccess(this);
         allTasks = da.getAllTasks();
 
         ArrayAdapter<Task> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, allTasks);
