@@ -1,7 +1,9 @@
 package com.example.taskapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +35,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
     EditText txtDueDate;
     CheckBox chkDone;
     Button btnSave;
+    Button btnDelete;
 
 
     SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
@@ -46,6 +49,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
         txtDueDate = findViewById(R.id.txtDueDate);
         chkDone = findViewById((R.id.chkDone));
         btnSave = findViewById(R.id.btnSave);
+        btnDelete = findViewById(R.id.btnDelete);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,14 +62,28 @@ public class TaskDetailsActivity extends AppCompatActivity {
             }
         });
 
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Log.d(TAG, "DELETE TASK: " + task.getId());
+//                da.deleteTask(task);
+//                Intent i = new Intent(TaskDetailsActivity.this, TaskListActivity.class);
+//                startActivity(i);
+
+                showDeleteDialog();
+
+            }
+        });
+
         //da = new TaskDataAccess(this);
         da = new csvTaskDataAccess(this);
-        Intent i = getIntent();
+        Intent i = getIntent(); // Grab intent which created this class activity. Includes EXTRA data.
         long id = i.getLongExtra(EXTRA_TASK_ID, 0);
         if(id > 0){
             task = da.getTaskById(id);
             Log.d(TAG, task.toString());
             putDataIntoUI();
+            btnDelete.setVisibility(View.VISIBLE);
         }
     }
 
@@ -164,4 +182,24 @@ public class TaskDetailsActivity extends AppCompatActivity {
 
     }
 
+    private void showDeleteDialog(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Delete Task");
+        alert.setMessage("You sure bout that? Delete this task???/lmao");
+        alert.setPositiveButton("Yerp", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                da.deleteTask(task);
+                startActivity(new Intent(TaskDetailsActivity.this, TaskListActivity.class));
+
+            }
+        });
+
+        alert.setNegativeButton("Nvrmind lol", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+    }
 }

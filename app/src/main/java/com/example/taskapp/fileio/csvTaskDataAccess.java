@@ -116,9 +116,11 @@ public class csvTaskDataAccess implements Taskable {
         String[] lines = dataString.trim().split("\n");
 
         for(String line : lines){
-            Task t = convertCSVToTask(line);
-            if(t != null){
-                dataList.add(t);
+            if(!line.isEmpty()){
+                Task t = convertCSVToTask(line);
+                if(t != null){
+                    dataList.add(t);
+                }
             }
         }
         this.allTasks = dataList;

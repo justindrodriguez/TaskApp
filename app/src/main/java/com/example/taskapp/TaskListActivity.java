@@ -48,6 +48,11 @@ public class TaskListActivity extends AppCompatActivity {
         da = new csvTaskDataAccess(this);
         allTasks = da.getAllTasks();
 
+        if(allTasks == null || allTasks.size() == 0){
+            Intent i = new Intent(this, TaskDetailsActivity.class);
+            startActivity(i);
+        }
+
         ArrayAdapter<Task> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, allTasks);
         lsTasks.setAdapter(adapter);
 

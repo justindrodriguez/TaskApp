@@ -7,4 +7,5 @@
     <string name="lbl_done">Done</string>
     <string name="btn_save">SAVE</string>
     <string name="btn_io_activity">Launch IO Activity</string>
+    <string name="btn_delete">Delete</string>
 </resources>
