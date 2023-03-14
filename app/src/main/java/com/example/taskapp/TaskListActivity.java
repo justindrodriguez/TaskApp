@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import com.example.taskapp.fileio.csvTaskDataAccess;
 import com.example.taskapp.models.Task;
+import com.example.taskapp.sqlite.SQLTaskDataAccess;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class TaskListActivity extends AppCompatActivity {
         //
         // TEST CODE
         //csvTaskDataAccess csvTest = new csvTaskDataAccess(this);
+        SQLTaskDataAccess sda = new SQLTaskDataAccess(this);
 
         btnAddTask = findViewById(R.id.btnAddTask);
         btnAddTask.setOnClickListener(new View.OnClickListener() {
