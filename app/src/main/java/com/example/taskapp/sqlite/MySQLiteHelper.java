@@ -25,11 +25,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         String taskTableSQL = SQLTaskDataAccess.TABLE_CREATE;
         db.execSQL(taskTableSQL);
         Log.d(TAG, taskTableSQL);
-
     }
 
     @Override

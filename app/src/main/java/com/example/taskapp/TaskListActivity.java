@@ -17,6 +17,7 @@ import com.example.taskapp.sqlite.SQLTaskDataAccess;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TaskListActivity extends AppCompatActivity {
 
@@ -34,7 +35,26 @@ public class TaskListActivity extends AppCompatActivity {
         //
         // TEST CODE
         //csvTaskDataAccess csvTest = new csvTaskDataAccess(this);
-        SQLTaskDataAccess sda = new SQLTaskDataAccess(this);
+//        SQLTaskDataAccess sda = new SQLTaskDataAccess(this);
+//        sda.insertTask(new Task("First Database Check Task", new Date(), false));
+//        sda.insertTask(new Task("Second Test Task", new Date(), true));
+//        sda.insertTask(new Task("Third task insert test.", new Date(), false));
+//
+//        ArrayList<Task> testTasks = sda.getAllTasks();
+//        for(Task tt : testTasks){
+//            Log.d(TAG, tt.toString());
+//        }
+//
+//        Task taskByIdTest = sda.getTaskById(2);
+//        Log.d(TAG, taskByIdTest.toString());
+//        taskByIdTest.setDescription("This task be been updated in the database.");
+//        sda.updateTask(taskByIdTest);
+//        Log.d(TAG, taskByIdTest.toString());
+//
+//        sda.deleteTask(taskByIdTest);
+        //
+        // End Test Code
+        //
 
         btnAddTask = findViewById(R.id.btnAddTask);
         btnAddTask.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +67,8 @@ public class TaskListActivity extends AppCompatActivity {
 
         lsTasks = findViewById(R.id.lsTasks);
         //da = new TaskDataAccess(this);
-        da = new csvTaskDataAccess(this);
+        //da = new csvTaskDataAccess(this);
+        da = new SQLTaskDataAccess(this);
         allTasks = da.getAllTasks();
 
         if(allTasks == null || allTasks.size() == 0){

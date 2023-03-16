@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.taskapp.fileio.csvTaskDataAccess;
 import com.example.taskapp.models.Task;
+import com.example.taskapp.sqlite.SQLTaskDataAccess;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -66,17 +67,18 @@ public class TaskDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                Log.d(TAG, "DELETE TASK: " + task.getId());
+                showDeleteDialog();
 //                da.deleteTask(task);
 //                Intent i = new Intent(TaskDetailsActivity.this, TaskListActivity.class);
 //                startActivity(i);
 
-                showDeleteDialog();
+
 
             }
         });
 
         //da = new TaskDataAccess(this);
-        da = new csvTaskDataAccess(this);
+        da = new SQLTaskDataAccess(this);
         Intent i = getIntent(); // Grab intent which created this class activity. Includes EXTRA data.
         long id = i.getLongExtra(EXTRA_TASK_ID, 0);
         if(id > 0){
@@ -191,7 +193,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 da.deleteTask(task);
                 startActivity(new Intent(TaskDetailsActivity.this, TaskListActivity.class));
-
             }
         });
 
@@ -201,5 +202,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
                 dialogInterface.dismiss();
             }
         });
-    }
+        alert.show();
+    } // ShowDeleteDialogue
 }
